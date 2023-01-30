@@ -1,0 +1,104 @@
+{
+    "type": "form",
+    "title": "Upload Material",
+    "body": [
+      {
+        "label": "Channel Type",
+        "type": "radios",
+        "name": "sendChannel",
+        "required": true,
+        "options": [
+          {
+            "label": "DingTalk (work news)",
+            "value": "90"
+          },
+          {
+            "label": "Enterprise WeChat (robot)",
+            "value": "100"
+          },
+          {
+            "label": "Enterprise WeChat (app message)",
+            "value": "70"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "label": "Enterprise WeChat Robot",
+        "name": "sendAccount",
+        "source": "${ls:backend_url}/account/queryByChannelType?channelType=100&creator=${ls:openId}",
+        "visibleOn": "this. sendChannel == 100",
+        "clearValueOnHidden": false,
+        "required": true,
+        "size": "lg"
+      },
+      {
+        "type": "select",
+        "label": "Enterprise WeChat (app message)",
+        "name": "sendAccount",
+        "source": "${ls:backend_url}/account/queryByChannelType?channelType=70&creator=${ls:openId}",
+        "visibleOn": "this. sendChannel == 70",
+        "clearValueOnHidden": false,
+        "required": true,
+        "size": "lg"
+      },
+      {
+        "type": "select",
+        "label": "DingTalk (work message) account",
+        "name": "sendAccount",
+        "source": "${ls:backend_url}/account/queryByChannelType?channelType=90&creator=${ls:openId}",
+        "visibleOn": "this. sendChannel == 90",
+        "clearValueOnHidden": false,
+        "required": true,
+        "size": "lg"
+      },
+      {
+        "type": "radios",
+        "label": "File Type",
+        "name": "fileType",
+        "required": true,
+        "options": [
+          {
+            "label": "Image",
+            "value": "10"
+          },
+          {
+            "label": "Voice",
+            "value": "20"
+          },
+          {
+            "label": "Normal file",
+            "value": "30"
+          },
+          {
+            "label": "Video",
+            "value": "40"
+          }
+        ],
+        "visibleOn": "this.sendChannel == 90 || this.sendChannel == 70"
+      },
+      {
+        "type": "input-file",
+        "label": "Upload Material",
+        "name": "file",
+        "required": true,
+        "asBlob": true
+      },
+      {
+        "type": "static",
+        "name": "id",
+        "visibleOn": "typeof data.id !== 'undefined'",
+        "label": "Return ID"
+      }
+    ],
+    "api": {
+      "url": "${ls:backend_url}/material/upload",
+      "method": "post",
+      "data": {
+        "sendChannel": "${sendChannel}",
+        "sendAccount": "${sendAccount}",
+        "fileType": "${fileType}",
+        "file": "${file}"
+      }
+    }
+ }

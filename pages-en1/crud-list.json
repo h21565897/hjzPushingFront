@@ -1,0 +1,228 @@
+{
+  "type": "page",
+  "title": "List management",
+  "body": [
+    {
+      "type": "CRUD",
+      "api": "${ls:backend_url}/messageTemplate/list?page=${page}&perPage=${perPage}&keywords=${keywords}&creator=${ls:openId}",
+      "bodyClassName": "panel-default",
+      "syncLocation": false,
+      "name": "sample",
+      "footerToolbar": ["switch-per-Page", "pagination"],
+      "filter": {
+        "title": "-",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "-",
+        "className": "M-B-SM",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "Keywords",
+            "placeholder": "Search through keywords",
+            "addOn": {
+              "label": "search",
+              "type": "submit",
+              "className": "btn-success"
+            },
+            "clearable": true,
+            "size": "LG"
+          }
+        ]
+      },
+      "bulkActions": [
+        {
+          "label": "batch deletion",
+          "type": "Button",
+          "level": "danger",
+          "actionType": "AJAX",
+          "api": "delete:${ls:backend_url}/messageTemplate/delete/$IDs",
+          "confirmText": "Are you sure to delete in batches?"
+        }
+      ],
+      "columns": [
+        {"name": "ID", "label": "ID", "width": 20, "sortable": true},
+        {"name": "name", "label": "Template message name"},
+        {
+          "name": "SendChannel",
+          "label": "Send channel",
+          "type": "mapping",
+          "map": {
+            "20": "Push notification bar",
+            "30": "Short message",
+            "40": "Mail",
+            "50": "WeChat service number (template message)",
+            "60": "WeChat Mini Program (Subscribe to Subscribe)",
+            "70": "Enterprise WeChat (Application Message)",
+            "80": "Nail group robot",
+            "90": "Nailing work message",
+            "100": "Enterprise WeChat (robot)",
+            "110": "Flying Book Robot"
+          }
+        },
+        {
+          "name": "templateType",
+          "label": "Template type",
+          "type": "mapping",
+          "map": {
+            "10": "Timing task sending",
+            "20": "Real -time call interface"
+          }
+        },
+        {
+          "name": "msgtype",
+          "label": "Message type",
+          "type": "mapping",
+          "map": {
+            "10": "Notification class",
+            "20": "Marketing",
+            "30": "Verification code"
+          }
+        },
+        {"name": "creator", "label": "creator"},
+        {
+          "name": "idype",
+          "label": "Receiver ID type",
+          "type": "mapping",
+          "map": {
+            "10": "User ID",
+            "20": "Device No",
+            "30": "phone number",
+            "40": "openid",
+            "50": "email address",
+            "60": "Enterprise WeChat Userid",
+            "70": "Userid",
+            "80": "Push notification bar CID",
+            "90": "Feishu Userid"
+          }
+        },
+        {
+          "type": "operation",
+          "label": "operate",
+          "width": "-",
+          "buttons": [
+            {
+              "type": "Button-GROUP",
+              "buttons": [
+                {
+                  "type": "Button",
+                  "label": "test",
+                  "level": "Primary",
+                  "initApi": "Post:${ls:backend_url}/MessageTemplate/Query/$ID",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "Test a message",
+                    "body": {
+                      "type": "form",
+                      "api": {
+                        "url": "${ls:backend_url}/messageTemplate/test",
+                        "method": "post",
+                        "requestAdaptor": "api.data.msgContent = json.stringify (api.data.testparam [0]) \n Return api;",
+                        "data": {
+                          "id": "${id}",
+                          "receiver": "${receiver}",
+                          "testParam": "${testParam}"
+                        }
+                      },
+                      "body": [
+                        {
+                          "type": "Input-Text",
+                          "name": "Receiver",
+                          "label": "Receiver",
+                          "required": true,
+                          "description": "<font color = \"#990000\"> Templates exist. </br> Please click [New] to fill in the copy of the copy! </font>"
+                        },
+                        {
+                          "type": "service",
+                          "schemaApi": "${ls:backend_url}/messageTemplate/test/content? ID =${id}"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "Button",
+                  "label": "Check",
+                  "level": "Primary",
+                  "actionType": "link",
+                  "link": "/crud/${id}"
+                },
+                {
+                  "type": "Button",
+                  "label": "Revise",
+                  "level": "info",
+                  "actionType": "link",
+                  "link": "/crud/${id}/edit"
+                },
+                {
+                  "type": "Button",
+                  "label": "start up",
+                  "level": "success",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to start?",
+                  "api": "Post:${ls:backend_url}/MessageTemplate/Start/$ID",
+                  "visibleOn": "this.templateType == 10 && this.msgstatus! = 30"
+                },
+                {
+                  "type": "Button",
+                  "label": "stop",
+                  "level": "success",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to pause?",
+                  "api": "Post:${ls:backend_url}/MessageTemplate/Stop/$ID",
+                  "visibleOn": "this.templatetype == 10 &&THIS.msgstatus == 30"
+                },
+                {
+                  "type": "Button",
+                  "label": "copy",
+                  "level": "warning",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to copy?",
+                  "api": "Post:${ls:backend_url}/MessageTemplate/Copy/$ID"
+                },
+                {
+                  "type": "Button",
+                  "label": "withdraw",
+                  "level": "danger",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to withdraw?",
+                  "api": "Post:${ls:backend_url}/messageTemplate/recall/$ID"
+                },
+                {
+                  "type": "Button",
+                  "label": "delete",
+                  "level": "danger",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to delete it?",
+                  "api": "delete:${ls:backend_url}/messageTemplate/delete/$ID"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "Right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "No data",
+      "tableClassName": "table-db table-strict",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "Crud-Table-Footer",
+      "toolbarClassName": "Crud-Table-Toolbar",
+      "combineNum": 0
+    }
+  ],
+  "toolbar": [
+    {
+      "type": "Button",
+      "actionType": "link",
+      "link": "/crud/new",
+      "label": "Newly increase",
+      "icon": "FA FA-PLUS",
+      "primary": true
+    }
+  ],
+  "remark": null,
+  "name": "Page-Demo"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "page",
+  "title": "Code editor",
+  "subTitle": "The monaco-editor used the worker, and if the console does not report an error, it means that it is normal.",
+  "body": [
+    {
+      "type": "form",
+      "controls": [
+        {"type": "editor", "name": "js", "label": "Javascript", "size": "md"}
+      ]
+    }
+  ]
+}

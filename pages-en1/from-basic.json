@@ -1,0 +1,241 @@
+{
+    "type": "page",
+    "title": "Basic Form",
+    "subTitle": "Show some regular forms, including validation, prompts, etc.",
+    "body": [
+      {
+        "type": "form",
+        "mode": "horizontal",
+        "title": "General Form Example",
+        "affixFooter": true,
+        "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/form/save",
+        "actions": [
+          {
+            "label": "Save",
+            "type": "submit",
+            "level": "success"
+          }
+        ],
+        "controls": [
+          {
+            "label": "Title",
+            "type": "text",
+            "placeholder": "Please enter a title",
+            "description": "Please enter an eye-catching title",
+            "name": "title",
+            "size": "md"
+          },
+ 
+          {
+            "label": "Number",
+            "required": true,
+            "type": "text",
+            "placeholder": "Please enter the number",
+            "name": "b",
+            "size": "md",
+            "validations": {
+              "matchRegexp": "/^\\w{4}-\\w{4}-\\w{4}$/"
+            },
+            "validationErrors": {
+              "matchRegexp": "The format of your input is incorrect, please follow the prompts to enter!"
+            },
+            "hint": "Input example: xxxx-xxxx-xxxx"
+          },
+ 
+          {
+            "label": "Top",
+            "type": "switch",
+            "name": "c",
+            "inline": true,
+            "labelRemark": "When enabled, this data will be pinned to the top!"
+          },
+ 
+          {
+            "label": "Activity Time",
+            "type": "date-range",
+            "name": "range",
+            "size": "md",
+            "remark": "This is a field time range"
+          },
+ 
+          {
+            "label": "Date Range",
+            "type": "group",
+            "controls": [
+              {
+                "type": "date",
+                "size": "md",
+                "name": "start",
+                "mode": "inline",
+                "maxDate": "${end}"
+              },
+ 
+              {
+                "label": "to",
+                "type": "date",
+                "size": "md",
+                "name": "end",
+                "inputClassName": "m-l-sm",
+                "mode": "inline",
+                "minDate": "${start}",
+                "remark": "This is the time range of the two fields"
+              }
+            ]
+          },
+ 
+          {
+            "label": "Browser",
+            "type": "button-group",
+            "name": "browser",
+            "value": "chrome",
+            "options": [
+              {
+                "label": "Chrome",
+                "value": "chrome"
+              },
+ 
+              {
+                "label": "Firefox",
+                "value": "firefox"
+              },
+ 
+              {
+                "label": "IE",
+                "value": "ie"
+              }
+            ]
+          },
+ 
+          {
+            "type": "list",
+            "name": "taocan",
+            "label": "Package Selection",
+            "options": [
+              {
+                "value": 1,
+                "body": "<div class='m-l-sm m-r-sm m-b-sm m-t-xs'> <div class='text-md p-b-xs b-b m-b-xs'>Package: C01</div> <div class='text-sm'>CPU: 2 cores</div> <div class='text-sm'>Memory: 1GB</div> <div class='text-sm'>SSD: 10GB</div > </div>"
+              },
+              {
+                "value": 2,
+                "body": "<div class='m-l-sm m-r-sm m-b-sm m-t-xs'> <div class='text-md p-b-xs b-b m-b-xs'>Package: C02</div> <div class='text-sm'>CPU: 4 cores</div> <div class='text-sm'>Memory: 4GB</div> <div class='text-sm'>SSD: 20GB</div > </div>"
+              },
+              {
+                "value": 3,
+                "disabled": true,
+                "body": "<div class='m-l-sm m-r-sm m-b-sm m-t-xs'> <div class='text-md p-b-xs b-b m-b-xs'>Package: C03</div> <div class='text-sm'>CPU: 8 cores</div> <div class='text-sm'>Memory: 8GB</div> <div class='text-sm'>SSD: 50GB</div > </div>"
+              }
+            ]
+          },
+ 
+          {
+            "label": "Favorite day of the week",
+            "type": "select",
+            "name": "select",
+            "size": "md",
+            "clearable": true,
+            "options": [
+              {
+                "label": "Monday",
+                "value": "0"
+              },
+ 
+              {
+                "label": "Tuesday",
+                "value": "1"
+              },
+ 
+              {
+                "label": "Wednesday",
+                "value": "2"
+              },
+ 
+              {
+                "label": "Thursday",
+                "value": "3"
+              },
+ 
+              {
+                "label": "Friday",
+                "value": "4"
+              },
+ 
+              {
+                "label": "Saturday",
+                "value": "5"
+              },
+ 
+              {
+                "label": "Sunday",
+                "value": "6"
+              }
+            ]
+          },
+ 
+          {
+            "label": "rest day",
+            "type": "list",
+            "name": "freeday",
+            "value": ["5", "6"],
+            "multiple": true,
+            "extractValue": true,
+            "options": [
+              {
+                "label": "Monday",
+                "value": "0"
+              },
+ 
+              {
+                "label": "Tuesday",
+                "value": "1"
+              },
+ 
+              {
+                "label": "Wednesday",
+                "value": "2"
+              },
+ 
+              {
+                "label": "Thursday",
+                "value": "3"
+              },
+ 
+              {
+                "label": "Friday",
+                "value": "4"
+              },
+ 
+              {
+                "label": "Saturday",
+                "value": "5"
+              },
+ 
+              {
+                "label": "Sunday",
+                "value": "6"
+              }
+            ]
+          },
+ 
+          {
+            "label": "number of people",
+            "type": "number",
+            "name": "num",
+            "size": "md",
+            "value": 10
+          },
+ 
+          {
+            "label": "ratio",
+            "type": "range",
+            "name": "percent"
+          },
+ 
+          {
+            "label": "Introduction",
+            "type": "textarea",
+            "name": "textarea"
+          }
+        ]
+      }
+    ]
+ }

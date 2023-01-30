@@ -1,0 +1,52 @@
+{
+    "type": "page",
+    "body": [
+      {
+        "title": "Query Conditions",
+        "type": "form",
+        "target": "my_crud",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "keywords",
+            "label": "User ID:",
+            "require": true
+          }
+        ],
+        "submitText": "Search"
+      },
+      {
+        "type": "crud",
+        "name": "my_crud",
+        "api": {
+          "url": "${ls:backend_url}/trace/user",
+          "method": "post",
+          "data": {
+            "receiver": "${keywords}"
+          }
+        },
+        "columns": [
+          {
+            "name": "businessId",
+            "label": "Business ID"
+          },
+          {
+            "name": "title",
+            "label": "Template name"
+          },
+          {
+            "name": "sendType",
+            "label": "Send Type"
+          },
+          {
+            "name": "creator",
+            "label": "Template Creator"
+          },
+          {
+            "name": "detail",
+            "label": "Send Details"
+          }
+        ]
+      }
+    ]
+ }

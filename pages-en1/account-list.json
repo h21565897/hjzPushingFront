@@ -1,0 +1,76 @@
+{
+  "type": "page",
+  "title": "List management",
+  "body": [
+    {
+      "type": "CRUD",
+      "api": "${ls:backend_url}/account/list? creator =${ls:openId}",
+      "bodyClassName": "Panel-Default",
+      "name": "sample",
+      "columns": [
+        {"name": "ID", "label": "ID", "width": 20, "sortable": true},
+        {"name": "name", "label": "Account Name"},
+        {"name": "accountconfig", "label": "Account configuration information"},
+        {
+          "name": "SendChannel",
+          "label": "Send channel",
+          "type": "mapping",
+          "map": {
+            "20": "Push notification bar",
+            "30": "Short message",
+            "40": "Mail",
+            "50": "WeChat service number (template message)",
+            "60": "WeChat Mini Program (Subscribe to Subscribe)",
+            "70": "Enterprise WeChat application message",
+            "80": "Nail group robot",
+            "90": "Nailing work message",
+            "100": "Enterprise WeChat Robot",
+            "110": "Flying Book Robot"
+          }
+        },
+        {
+          "type": "operation",
+          "label": "operate",
+          "width": "-",
+          "buttons": [
+            {
+              "type": "Button-GROUP",
+              "buttons": [
+                {
+                  "type": "Button",
+                  "label": "delete",
+                  "level": "danger",
+                  "actionType": "AJAX",
+                  "confirmText": "Do you confirm that you want to delete it?",
+                  "api": "delete:${ls:backend_url}/account/delete/$ID"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "Right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "No data",
+      "tableClassName": "table-db table-strict",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "Crud-Table-Footer",
+      "toolbarClassName": "Crud-Table-Toolbar",
+      "combineNum": 0
+    }
+  ],
+  "toolbar": [
+    {
+      "type": "Button",
+      "actionType": "link",
+      "link": "/account/new",
+      "label": "Newly increase",
+      "icon": "FA FA-PLUS",
+      "primary": true
+    }
+  ],
+  "remark": null,
+  "name": "Page-Demo"
+}

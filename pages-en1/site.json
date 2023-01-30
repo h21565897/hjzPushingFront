@@ -1,0 +1,109 @@
+{
+    "status": 0,
+    "msg": "",
+    "data": {
+      "pages": [
+        {
+          "label": "Home",
+          "url": "/",
+          "redirect": "/crud/list"
+        },
+        {
+          "label": "Template Management",
+          "children": [
+            {
+              "label": "Message Template Management",
+              "icon": "fa fa-cube",
+              "children": [
+                {
+                  "label": "New template",
+                  "url": "/crud/new",
+                  "icon": "fa fa-plus",
+                  "schemaApi": "get:/pages/crud-new.json"
+                },
+                {
+                  "label": "Template List",
+                  "url": "/crud/list",
+                  "icon": "fa fa-list",
+                  "schemaApi": "get:/pages/crud-list.json"
+                },
+                {
+                  "url": "/crud/:id",
+                  "schemaApi": "get:/pages/crud-view.json"
+                },
+                {
+                  "url": "/crud/:id/edit",
+                  "schemaApi": "get:/pages/crud-edit.json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Data Management",
+          "children": [
+            {
+              "label": "Full Link Tracking",
+              "icon": "fa fa-cube",
+              "children": [
+                {
+                  "url": "trace/user",
+                  "label": "User full link tracking",
+                  "schemaApi": "get:/pages/trace-user.json"
+                },
+                {
+                  "url": "trace/messageTemplate",
+                  "label": "Message Template Full Link Tracking",
+                  "schemaApi": "get:/pages/trace-message-template.json"
+                },
+                {
+                  "url": "trace/sms",
+                  "label": "SMS sending query",
+                  "schemaApi": "get:/pages/trace-sms.json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Material Management",
+          "children": [
+            {
+              "label": "Channel Material Management",
+              "icon": "fa fa-cube",
+              "children": [
+                {
+                  "url": "material/upload",
+                  "label": "Upload Material",
+                  "schemaApi": "get:/pages/material-upload.json"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Account Management",
+          "children": [
+            {
+              "label": "Channel account management",
+              "icon": "fa fa-cube",
+              "children": [
+                {
+                  "label": "Add new account",
+                  "url": "/account/new",
+                  "icon": "fa fa-plus",
+                  "schemaApi": "get:/pages/account-new.json"
+                },
+                {
+                  "url": "account/list",
+                  "label": "Channel Account",
+                  "icon": "fa fa-list",
+                  "schemaApi": "get:/pages/account-list.json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+ }

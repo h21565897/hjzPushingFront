@@ -1,0 +1,68 @@
+{
+    "type": "page",
+    "body": [
+      {
+        "title": "Query Conditions",
+        "type": "form",
+        "target": "my_crud",
+        "body": [
+          {
+            "type": "input-text",
+            "name": "phone",
+            "label": "Mobile phone number:",
+            "require": true
+          },
+          {
+            "type": "input-datetime",
+            "label": "DateTime",
+            "name": "dateTime",
+            "id": "u:19a52e7a9c6c",
+            "require": true
+          }
+        ],
+        "submitText": "Search"
+      },
+      {
+        "type": "crud",
+        "name": "my_crud",
+        "api": {
+          "url": "${ls:backend_url}/trace/sms",
+          "method": "post",
+          "data": {
+            "receiver": "${phone}",
+            "dateTime": "${dateTime}"
+          }
+        },
+        "columns": [
+          {
+            "name": "businessId",
+            "label": "Business ID"
+          },
+          {
+            "name": "content",
+            "label": "Send content"
+          },
+          {
+            "name": "sendTime",
+            "label": "Sent Time"
+          },
+          {
+            "name": "sendType",
+            "label": "Sending Status"
+          },
+          {
+            "name": "receiveTime",
+            "label": "Receipt Time"
+          },
+          {
+            "name": "receiveType",
+            "label": "Receipt Status"
+          },
+          {
+            "name": "receiveContent",
+            "label": "Receipt Report"
+          }
+        ]
+      }
+    ]
+ }

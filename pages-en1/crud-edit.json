@@ -1,0 +1,1000 @@
+{
+  "type": "page",
+  "title": "Modify the current template",
+  "body": [
+    {
+      "title": "-",
+      "actions": [{"label": "save", "type": "submit", "level": "success"}],
+      "body": [
+        {
+          "type": "fieldSet",
+          "title": "basic configuration",
+          "body": [
+            {
+              "type": "Input-Text",
+              "label": "Template name",
+              "name": "name",
+              "size": "MD",
+              "required": true
+            },
+            {
+              "type": "Input-Text",
+              "label": "Template business",
+              "name": "Proposer",
+              "size": "MD",
+              "mode": "-",
+              "description": "-"
+            },
+            {
+              "type": "radios",
+              "label": "Receiver ID type",
+              "name": "idype",
+              "options": [
+                {"label": "User ID", "value": "10"},
+                {"label": "Device No", "value": "20"},
+                {"label": "phone number", "value": "30"},
+                {"label": "openid", "value": "40"},
+                {"label": "email address", "value": "50"},
+                {"label": "Enterprise WeChat Userid", "value": "60"},
+                {"label": "Userid", "value": "70"},
+                {"label": "Push notification bar CID", "value": "80"},
+                {"label": "Feishu Userid", "value": "90"}
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "Message type",
+              "name": "msgtype",
+              "options": [
+                {"label": "Notification class", "value": "10"},
+                {"label": "Marketing", "value": "20"},
+                {"label": "Verification code", "value": "30"}
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "Shield",
+              "name": "shieldtype",
+              "options": [
+                {"label": "No shielding at night", "value": "10"},
+                {"label": "Shock at night", "value": "20"},
+                {
+                  "label": "Night shielding (sent at 9 o'clock the next day)",
+                  "value": "30"
+                }
+              ],
+              "required": true
+            },
+            {
+              "type": "radios",
+              "label": "Message template type",
+              "name": "templateType",
+              "options": [
+                {"label": "timing", "value": "10"},
+                {"label": "real time", "value": "20"}
+              ],
+              "required": true
+            },
+            {
+              "type": "Input-Text",
+              "label": "cron expression",
+              "name": "expectpushtime",
+              "size": "MD",
+              "visibleOn": "this.templateType == 10",
+              "clearValueOnHidden": false,
+              "visible": "-",
+              "required": true,
+              "description": "1. <font color = \"#008252\"> Generate CRON expression page: <a href=\" {}\" target=\"_blank\"> 1} </a> </font> 2. <font color = \" #008252 \"> Require [Send it now] Fill in 0 </font>",
+              "placeholder": "Need [Send it now] Fill in 0 when 0"
+            },
+            {
+              "type": "Input-Text",
+              "name": "croncrowdpath",
+              "visibleOn": "this.templateType == 10",
+              "required": true,
+              "label": "Portal file path",
+              "size": "MD",
+              "clearValueOnHidden": false,
+              "visible": "-",
+              "readOnly": true,
+              "placeholder": "Fill in automatically after uploading (no editing)"
+            }
+          ],
+          "bodyClassName": "R-3X W-Full Text-LG R FONT-BOLD",
+          "className": "-"
+        },
+        {
+          "type": "fieldSet",
+          "title": "Channel information",
+          "body": [
+            {
+              "name": "SendChannel",
+              "label": "Send channel",
+              "type": "radios",
+              "options": [
+                {"label": "Push notification bar", "value": "20"},
+                {"label": "Short message", "value": "30"},
+                {"label": "Mail", "value": "40"},
+                {
+                  "label": "WeChat service number (template message)",
+                  "value": "50"
+                },
+                {
+                  "label": "WeChat Mini Program (Subscribe to Subscribe)",
+                  "value": "60"
+                },
+                {
+                  "label": "Enterprise WeChat (Application Message)",
+                  "value": "70"
+                },
+                {"label": "Enterprise WeChat (robot)", "value": "100"},
+                {"label": "Nail group robot", "value": "80"},
+                {"label": "Nailing work message", "value": "90"},
+                {"label": "Flying Book Robot", "value": "110"}
+              ],
+              "required": true
+            },
+            {
+              "type": "hidden",
+              "name": "Sendaccount",
+              "value": "0",
+              "visibleOn": "this.sendChannel == 30"
+            },
+            {
+              "type": "Input-Text",
+              "label": "SMS account",
+              "disabled": true,
+              "value": "According to the [News type], allocate to the corresponding SMS channel according to traffic",
+              "visibleOn": "this.sendChannel == 30",
+              "clearValueOnHidden": false,
+              "required": false,
+              "size": "LG"
+            },
+            {
+              "name": "content",
+              "type": "Input-Text",
+              "label": "text message content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 30",
+              "mode": "-",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "SMS link",
+              "name": "URL",
+              "visibleOn": "this.sendChannel == 30",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Select",
+              "label": "Service number account",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeneltype = 50 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 50",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Select",
+              "label": "Choice template",
+              "name": "templateid",
+              "source": "${ls:backend_url}/officialialacound/template/list? ID =${sendAccount}",
+              "visibleOn": "this.sendChannel == 50",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG",
+              "initFetchOn": "data.sendaccount"
+            },
+            {
+              "type": "radios",
+              "name": "linktype",
+              "label": "Jump to the floor page",
+              "visibleOn": "this.sendChannel == 50",
+              "options": [
+                {"label": "Http link", "value": "10"},
+                {"label": "Applets", "value": "20"}
+              ],
+              "required": true
+            },
+            {
+              "type": "Input-Text",
+              "label": "Send link",
+              "name": "URL",
+              "required": true,
+              "visibleOn": "this.SendChannel == 50 && THINKTYPE == 10",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Select",
+              "label": "Applets",
+              "name": "miniProgramid",
+              "required": true,
+              "visibleOn": "this.sendChannel == 50 &&THINKTYPE == 20",
+              "options": [
+                {
+                  "label": "There is no small program for the time being",
+                  "value": "10"
+                }
+              ],
+              "size": "LG",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Send link",
+              "name": "PATH",
+              "required": true,
+              "visibleOn": "this.sendChannel == 50 &&THINKTYPE == 20",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Select",
+              "label": "Enterprise WeChat (robot)",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeneltype = 100 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 100",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "name": "sendtype",
+              "label": "Sending type",
+              "type": "radios",
+              "options": [
+                {"label": "text", "value": "10"},
+                {"label": "Graphic", "value": "40"},
+                {"label": "document", "value": "60"},
+                {"label": "Markdown type", "value": "80"},
+                {"label": "picture", "value": "100"}
+              ],
+              "visibleOn": "this.sendChannel == 100",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Send Content",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.SendChannel == 100 && this.Sendtype == 10",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "markdown",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.SendChannel == 100 && this.sendtype == 80",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Picture Base64",
+              "name": "base64",
+              "required": true,
+              "visibleOn": "this.SendChannel == 100 && this.Sendtype == 100",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Base64 encoding of the picture content"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Picture content md5",
+              "name": "MD5",
+              "required": true,
+              "visibleOn": "this.SendChannel == 100 && this.Sendtype == 100",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "MD5 before base64 encoded"
+            },
+            {
+              "type": "Input-Text",
+              "label": "File ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 100 && this.Sendtype == 60",
+              "size": "LG",
+              "placeholder": "Available placeholders {$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Table",
+              "name": "Articles",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 100 && (this.sendtype == 40)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "title",
+                  "placeholder": "Available placeholders {$title}"
+                },
+                {
+                  "name": "description",
+                  "label": "describe",
+                  "placeholder": "Available placeholders {$description}"
+                },
+                {
+                  "name": "URL",
+                  "label": "Jump link",
+                  "placeholder": "Available placeholders {$url}"
+                },
+                {
+                  "name": "picurn",
+                  "label": "image link",
+                  "placeholder": "Available placeholders {$picurlURL}"
+                }
+              ]
+            },
+            {
+              "type": "service",
+              "schemaApi": "${ls:backend_url}/officialiaLaccount/DetailTemplate? ID =${sendAccount} & wxTemplateid =${templateId}",
+              "visibleOn": "this.sendChannel == 50"
+            },
+            {
+              "type": "Select",
+              "label": "Small program account",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeneltype = 60 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 60",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Select",
+              "label": "Choice template",
+              "name": "templateid",
+              "source": "${ls:backend_url}/miniprogram/template/list? ID =${sendAccount}",
+              "visibleOn": "this.sendChannel == 60",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG",
+              "initFetchOn": "data.sendaccount"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Send link",
+              "name": "page",
+              "required": true,
+              "visibleOn": "this.sendChannel == 60",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "service",
+              "schemaApi": "${ls:backend_url}/miniprogram/defailTemplate? ID =${sendAccount} & wxTemplateid =${templateId}",
+              "visibleOn": "this.sendChannel == 60",
+              "description": "<font color = \"#990000\"> Please click [New] to fill in the copywriting </font>"
+            },
+            {
+              "type": "Select",
+              "label": "Flying Book Robot",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeneltype = 110 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 110",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "name": "sendtype",
+              "label": "Sending type",
+              "type": "radios",
+              "options": [{"label": "text", "value": "10"}],
+              "visibleOn": "this.sendChannel == 110",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Flying Book Content",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.SendChannel == 110 &&TIS.SENDTYPE == 10",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Picture identification",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 110 && this.sendtype == 100",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$mediaId}"
+            },
+            {
+              "type": "Select",
+              "label": "Push account",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeneltype = 20 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 20",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Push title",
+              "name": "title",
+              "visibleOn": "this.sendChannel == 20",
+              "size": "LG",
+              "required": true,
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$title}"
+            },
+            {
+              "name": "content",
+              "type": "Input-Text",
+              "label": "Push content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 20",
+              "mode": "-",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Push link",
+              "name": "URL",
+              "required": true,
+              "visibleOn": "this.sendChannel == 20",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Select",
+              "label": "Email account",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeltype = 40 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 40",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "mail title",
+              "name": "title",
+              "required": true,
+              "visibleOn": "this.sendChannel == 40",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$title}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "content of email",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.sendChannel == 40",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available place occupies {$content}, you can enter HTML"
+            },
+            {
+              "type": "Select",
+              "label": "Enterprise WeChat application",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeltype = 70 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 70",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "name": "sendtype",
+              "label": "Sending type",
+              "type": "radios",
+              "options": [
+                {"label": "text", "value": "10"},
+                {"label": "voice", "value": "20"},
+                {"label": "video", "value": "30"},
+                {"label": "Graphic", "value": "40"},
+                {"label": "Text card", "value": "50"},
+                {"label": "document", "value": "60"},
+                {"label": "Markdown type", "value": "80"},
+                {"label": "picture", "value": "100"}
+              ],
+              "visibleOn": "this.sendChannel == 70",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Enterprise WeChat content",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.SendChannel == 70 && this.sendtype == 10",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Picture ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 70 &&TIS.SENDTYPE == 100",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$mediaId}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Voice ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 70 &&TIS.SENDTYPE == 20",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$mediaId}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Video ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "This.sendChannel == 70 &&TIS.SENDTYPE == 30",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$mediaId}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "File ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 70 &&TIS.SENDTYPE == 60",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$mediaId}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "title",
+              "name": "title",
+              "required": true,
+              "visibleOn": "this.sendChannel == 70 &&TIS.SENDTYPE == 50",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$title}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Description details",
+              "name": "description",
+              "required": true,
+              "visibleOn": "this.sendChannel == 70 &&TIS.SENDTYPE == 50",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$description}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Jump link",
+              "name": "URL",
+              "required": true,
+              "visibleOn": "this.sendChannel == 70 &&TIS.SENDTYPE == 50",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Input-Table",
+              "name": "Articles",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 70 && (this.sendtype == 40)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "title",
+                  "placeholder": "Available placeholders {$title}"
+                },
+                {
+                  "name": "description",
+                  "label": "describe",
+                  "placeholder": "Available placeholders {$description}"
+                },
+                {
+                  "name": "URL",
+                  "label": "Jump link",
+                  "placeholder": "Available placeholders {$url}"
+                },
+                {
+                  "name": "picurn",
+                  "label": "image link",
+                  "placeholder": "Available placeholders {$picurlURL}"
+                }
+              ]
+            },
+            {
+              "type": "Input-Text",
+              "label": "markdown",
+              "name": "content",
+              "required": true,
+              "visibleOn": "this.SendChannel == 70 &&TIS.SENDTYPE == 80",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Select",
+              "label": "Nail group robot",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeltype = 80 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 80",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Select",
+              "label": "Nail application",
+              "name": "Sendaccount",
+              "source": "${ls:backend_url}/account/queryByChanneltype? Channeltype = 90 & creator =${ls:openId}",
+              "visibleOn": "this.sendChannel == 90",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "name": "sendtype",
+              "label": "Sending type",
+              "type": "radios",
+              "options": [
+                {"label": "Text (text)", "value": "10"},
+                {"label": "Voice (VOICE)", "value": "20"},
+                {"label": "File (File)", "value": "60"},
+                {"label": "Markdown type (Markdown)", "value": "80"},
+                {"label": "Image (Image)", "value": "100"},
+                {"label": "Link message (Link)", "value": "110"},
+                {"label": "Card message (ACTION_CARD)", "value": "120"},
+                {"label": "OA message (OA)", "value": "130"}
+              ],
+              "visibleOn": "this.sendChannel == 90",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "name": "sendtype",
+              "label": "Sending type",
+              "type": "radios",
+              "options": [
+                {"label": "Text (text)", "value": "10"},
+                {"label": "Photo (FeedCard)", "value": "40"},
+                {"label": "Markdown type (Markdown)", "value": "80"},
+                {"label": "Link message (links)", "value": "110"},
+                {"label": "Card message (ACTIONCARD)", "value": "120"}
+              ],
+              "visibleOn": "this.sendChannel == 80",
+              "clearValueOnHidden": false,
+              "required": true,
+              "size": "LG"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Nail title",
+              "name": "title",
+              "required": true,
+              "visibleOn": "This.SendChannel == 80 && (this.sendtype == 80 || This.Sendtype == 110 || This.Sendtype == 120)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$title}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Nailing content",
+              "name": "content",
+              "required": true,
+              "visibleOn": "This.SendChannel == 80 && (this.sendtype == 10 || This.Sendtype == 80 || This.SendType == 110 || This.SendType == 120)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "radios",
+              "label": "Button layout",
+              "name": "btnorientation",
+              "visibleOn": "this.sendChannel == 80 && (this.sendtype == 120)",
+              "options": [
+                {"label": "Buttons are arranged vertically", "value": "0"},
+                {"label": "Best arranged horizontal arrangement", "value": "1"}
+              ]
+            },
+            {
+              "type": "Input-Table",
+              "name": "BTNS",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 80 && (this.sendtype == 120)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "title",
+                  "placeholder": "Available placeholders {$title}"
+                },
+                {
+                  "name": "actionurl",
+                  "label": "Jump link",
+                  "placeholder": "Available placeholders {$actionURL}"
+                }
+              ]
+            },
+            {
+              "type": "Input-Text",
+              "label": "Link to send",
+              "name": "URL",
+              "required": true,
+              "visibleOn": "this.sendChannel == 80 && (this.sendtype == 110)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Nailing picture link",
+              "name": "picurn",
+              "visibleOn": "this.sendChannel == 80 && (this.sendtype == 110)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$picUrl}"
+            },
+            {
+              "type": "Input-Table",
+              "name": "FeedCards",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 80 && (this.sendtype == 40)",
+              "columns": [
+                {"name": "title", "label": "title"},
+                {"name": "Messageurl", "label": "Jump link"},
+                {"name": "picurn", "label": "image link"}
+              ]
+            },
+            {
+              "type": "Input-Text",
+              "label": "Message title",
+              "name": "title",
+              "required": true,
+              "visibleOn": "This.SendChannel == 90 && (this.sendtype == 110 || This.Sendtype == 80 || This.Sendtype == 120)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$title}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Message content",
+              "name": "content",
+              "required": true,
+              "visibleOn": "This.SendChannel == 90 && (this.sendtype == 10 || This.Sendtype == 110 || This.SendType == 80 || This.SendType == 120)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$content}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Voice ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 20",
+              "size": "LG",
+              "placeholder": "Available placeholders {$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Voice",
+              "name": "duration",
+              "required": true,
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 20",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "The positive integer, less than 60, indicates the audio duration"
+            },
+            {
+              "type": "Input-Text",
+              "label": "File ID",
+              "name": "mediaid",
+              "required": true,
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 60",
+              "size": "LG",
+              "placeholder": "Available placeholders {$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "radios",
+              "label": "Button layout",
+              "name": "btnorientation",
+              "visibleOn": "this.sendChannel == 90 && (this.sendtype == 120)",
+              "options": [
+                {"label": "Buttons are arranged vertically", "value": "0"},
+                {"label": "Best arranged horizontal arrangement", "value": "1"}
+              ]
+            },
+            {
+              "type": "Input-Table",
+              "name": "BTNS",
+              "addable": true,
+              "editable": true,
+              "visibleOn": "this.sendChannel == 90 && (this.sendtype == 120)",
+              "columns": [
+                {
+                  "name": "title",
+                  "label": "title",
+                  "placeholder": "Available placeholders {$title}"
+                },
+                {
+                  "name": "action_url",
+                  "label": "Jump link",
+                  "placeholder": "Available placeholders {$action_url}"
+                }
+              ]
+            },
+            {
+              "type": "Input-Text",
+              "label": "Head title",
+              "name": "dingdingoaheadtital",
+              "required": true,
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 130",
+              "size": "LG",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Head title color",
+              "name": "dingdingoaheadbgcolor",
+              "required": true,
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 130",
+              "size": "LG",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Page jump link",
+              "name": "URL",
+              "required": true,
+              "visibleOn": "This.sendChannel == 90 && (this.sendtype == 110 || This.Sendtype == 130)",
+              "size": "LG",
+              "clearValueOnHidden": false,
+              "placeholder": "Available placeholders {$url}"
+            },
+            {
+              "type": "Input-Text",
+              "label": "Title title",
+              "name": "dingdingoatital",
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 130",
+              "size": "LG",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Text content",
+              "name": "dingdingoacontent",
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 130",
+              "size": "LG",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Picture ID",
+              "name": "mediaid",
+              "visibleOn": "This.SendChannel == 90 && (this.sendtype == 100 || This.Sendtype == 110 || This.Sendtype == 130)",
+              "size": "LG",
+              "placeholder": "Available placeholders {$mediaId}",
+              "clearValueOnHidden": false
+            },
+            {
+              "type": "Input-Text",
+              "label": "Author name",
+              "name": "dingdingoaathor",
+              "visibleOn": "this.SendChannel == 90 &&TIS.SENDTYPE == 130",
+              "size": "LG",
+              "clearValueOnHidden": false
+            }
+          ],
+          "className": "-",
+          "bodyClassName": "R-3X W-Full Text-LG R FONT-BOLD"
+        }
+      ],
+      "type": "form",
+      "mode": "horizontal",
+      "affixFooter": true,
+      "panelClassName": "Panel-DEFAULT",
+      "bodyClassName": "Text-lg",
+      "redirect": "/crud/list",
+      "api": {
+        "url": "${ls:backend_url}/messageTemplate/save",
+        "method": "post",
+        "requestAdaptor": "let jsonobj = {}; \n\n let content = json.parse (api.data.msgContent) .Content \n let url = json.parse (api.data.msgcontent) .url \n let title = json.parse (api.data.msgContent) .title \n let sendType = json.parse (api.data.msgContent) .sendtype \n let picurl = json.parse (api.data.msgcontent) .picurl \n\n\n // push notification bar \n if.data.sendchannel == '20') {{ \n     jsonObj.Content = Content \n     jsonobj.url = url \n     jsonObj.title = Title \n } \n // Short message \n if.data.sendchannel == '30') {{ \n     jsonobj.url = url \n     jsonObj.Content = Content \n } \n // mail \n if.data.sendchannel == '40') {{ \n     jsonObj.Content = Content \n     jsonObj.title = Title \n } \n // Enterprise WeChat (Application Message) \n if.data.sendchannel == '70') {{ \n     // Text, Markdown Type \n     if (Sendtype == '10' || Sendtype == '80') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n     } \n     // Image, video, voice, file type \n     if (Sendtype == '20' || Sendtype == '30' || Sendtype == '60' || Sendtype == '100') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.Mediaid = API.Data.Mediaid \n     } \n     // Text card type \n     if (seeType == '50') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.title = Title \n         jsonobj.url = url \n         jsonObj.Descript = API.Data.Descripting \n     } \n     // graphic type \n     if (seeType == '40') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.artICLES = json.stringify (API.Data.ARTICLES) \n     } \n\n } \n // Enterprise WeChat (robot) \n if.data.sendchannel == '100') {{ \n     // Text type \n     if (seeType == '10') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n     } \n     // Markdown type \n     if (seeType == '80') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n     } \n      // Image type \n     if (seeType == '100') { \n         jsonObj.md5 = api.data.md5 \n         jsonObj.base64 = api.data.base64 \n         jsonObj.SENDTYPE = Sendtype \n     } \n      // file type \n     if (seeType == '60') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.Mediaid = API.Data.Mediaid \n     } \n     // graphic type \n     if (seeType == '40') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.artICLES = json.stringify (API.Data.ARTICLES) \n     } \n } \n // WeChat service number \n if.data.sendchannel == '50') {{ \n     jsonobj.path = api.data.path \n     jsonObj.miniProgramid = API.Data.miniprogramid \n     jsonObj.templateid = api.data.templateid \n     jsonobj.url = url \n     jsonObj.LINKTYPE = API.Data.LINKTYPE \n\n     // Template parameters \n     jsonObJ.OfficialaccountParam = json.stringify \n } \n // WeChat Mini Program \n if.data.sendchannel == '60') {{ \n     jsonObj.page = api.data.page \n     jsonObj.templateid = api.data.templateid \n     // Template parameters \n     jsonObj.miniPramparam = json.stringify (API.Data.minIPROGramparam [0]) \n } \n\n // Nailing Robot \n if.data.sendchannel == '80') {{ \n     // Text type (Text) \n     if (seeType == '10') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n     } \n     // Graphic type (FeedCard) \n     if (seeType == '40') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.FeedCards = json.stringify (API.Data.Feedcards) \n     } \n     // Markdown Type (Markdown) \n     if (seeType == '80') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.title = Title \n     } \n     // Link type (LINK) \n     if (seeType == '110') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.title = Title \n         jsonObj.picurl = picurl \n         jsonobj.url = url \n     } \n     // Card jumping (ActionCard) \n     if (seeType == '120') { \n         jsonObj.title = Title \n         jsonObj.Content = Content \n         jsonObj.btnOrientation = api.data.btnorientation \n         jsonobj.btns = json.stringify (API.Data.bTNS) \n         jsonObj.SENDTYPE = Sendtype \n     } \n } \n // Nailing work message \n if.data.sendchannel == '90') {{ \n     // Text type \n     if (seeType == '10') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n     } \n     // voice type \n     if (seeType == '20') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.Duration = API.Data.Duration \n         jsonObj.Mediaid = API.Data.Mediaid \n     } \n     // File type || Picture type \n     if (Sendtype == '60' || Sendtype == '100') { \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.Mediaid = API.Data.Mediaid \n     } \n     // link type \n     if (seeType == '110') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.title = Title \n         jsonObj.Mediaid = API.Data.Mediaid \n         jsonobj.url = url \n     } \n     // Markdown Type (Markdown) \n     if (seeType == '80') { \n         jsonObj.Content = Content \n         jsonObj.SENDTYPE = Sendtype \n         jsonObj.title = Title \n     } \n     // Card jumping (ActionCard) \n     if (seeType == '120') { \n         jsonObj.title = Title \n         jsonObj.Content = Content \n         jsonObj.btnOrientation = api.data.btnorientation \n         jsonobj.btns = json.stringify (API.Data.bTNS) \n         jsonObj.SENDTYPE = Sendtype \n     } \n    \n     // OA (ACTIONCARD) \n     if (seeType == '130') { \n        \n         // head \n         var head = {} \n         head.bgcolor = api.data.dingdingoaheadbgcolor \n         head.text = api.data.dingdingoaheadtitle \n         jsonobj.dingdingoahead = head \n        \n         // Body \n         var body = {} \n         body.tital = api.data.di",
+        "data": {
+          "name": "${name}",
+          "idType": "${idType}",
+          "msgType": "${msgType}",
+          "templateType": "${templateType}",
+          "expectPushTime": "${expectPushTime}",
+          "proposer": "${proposer}",
+          "sendChannel": "${sendChannel}",
+          "sendAccount": "${sendAccount}",
+          "cronCrowdPath": "${cronCrowdPath}",
+          "shieldType": "${shieldType}",
+          "msgContent": "{\"content\":\"${content} \",\" url \":\"${url} \",\" title \":\"${title} \",\" Sendtype \":\"${sendType} \",\" Picurl \":\"${picUrl} \"}",
+          "id": "${id}",
+          "flowId": "${flowId}",
+          "msgStatus": "${msgStatus}",
+          "auditStatus": "${auditStatus}",
+          "creator": "${creator}",
+          "updator": "${updator}",
+          "team": "${team}",
+          "auditor": "${auditor}",
+          "deduplicationTime": "${deduplicationTime}",
+          "isNightShield": "${isNightShield}",
+          "created": "${created}",
+          "updated": "${updated}",
+          "feedCards": "${feedCards}",
+          "btnOrientation": "${btnOrientation}",
+          "btns": "${btns}",
+          "mediaId": "${mediaId}",
+          "duration": "${duration}",
+          "dingDingOaHeadTitle": "${dingDingOaHeadTitle}",
+          "dingDingOaHeadBgColor": "${dingDingOaHeadBgColor}",
+          "dingDingOaTitle": "${dingDingOaTitle}",
+          "dingDingOaContent": "${dingDingOaContent}",
+          "dingDingOaAuthor": "${dingDingOaAuthor}",
+          "officialAccountParam": "${officialAccountParam}",
+          "templateId": "${templateId}",
+          "path": "${path}",
+          "miniProgramId": "${miniProgramId}",
+          "linkType": "${linkType}",
+          "page": "${page}",
+          "miniProgramParam": "${miniProgramParam}",
+          "md5": "${md5}",
+          "base64": "${base64}",
+          "articles": "${articles}",
+          "description": "${description}",
+          "isDeleted": "${isDeleted}"
+        }
+      },
+      "initApi": "${ls:backend_url}/messageTemplate/query/${params.id}"
+    }
+  ],
+  "toolbar": [
+    {
+      "type": "Button",
+      "actionType": "link",
+      "link": "/crud/list",
+      "label": "Back to list"
+    }
+  ],
+  "messages": {},
+  "style": {},
+  "bodyClassName": "P-LG P-LG P-LG P-LG P-LG M-LG M-LG M-LG M-LG M-LG M-LG M-LG M-5X B-Dark R-3X Tark BG-WHITE W- Full FONT-BOLD Text-LG"
+}
